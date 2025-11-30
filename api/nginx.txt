@@ -1,0 +1,14 @@
+rewrite ^/api/u/([0-9]+)/([^/]+)$ /api/endpoints/logos.php?codigo=$1&arquivo=$2 last;
+rewrite ^/api/bancos$ /api/endpoints/bancos.php last;
+rewrite ^/api/bancos/([^/]+)$ /api/endpoints/bancos.php?id=$1 last;
+
+# Arquivos estáticos
+location ~* \.(png|jpg|jpeg|gif|svg|webp|ico)$ {
+    try_files $uri =404;
+}
+
+# Bloquear acesso direto aos PHP dos endpoints,
+# mas permitir chamadas internas via rewrite
+location ~ ^/api/endpoints/.+\.php$ {
+    internal;
+}

@@ -1,0 +1,18 @@
+RewriteEngine On
+RewriteBase /
+
+# /api/u/104/logo.svg
+RewriteRule ^api/u/([0-9]+)/([^/]+)$ api/endpoints/logos.php?codigo=$1&arquivo=$2 [L,QSA]
+
+# /api/bancos
+RewriteRule ^api/bancos$ api/endpoints/bancos.php [L,QSA]
+
+# /api/bancos/001
+RewriteRule ^api/bancos/([^/]+)$ api/endpoints/bancos.php?id=$1 [L,QSA]
+
+# Permitir arquivos estáticos
+RewriteCond %{REQUEST_FILENAME} -f
+RewriteRule . - [L]
+
+# Bloquear acesso direto ao diretório
+RewriteRule ^api/endpoints/(.*)$ - [F]
