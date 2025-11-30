@@ -1,3 +1,6 @@
 # Ignore files
 
 config.php
+
+# MacOS System
+.DS_Store
