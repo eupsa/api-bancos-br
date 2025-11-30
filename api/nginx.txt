@@ -1,14 +1,18 @@
+# /api/u/104/logo.svg
 rewrite ^/api/u/([0-9]+)/([^/]+)$ /api/endpoints/logos.php?codigo=$1&arquivo=$2 last;
-rewrite ^/api/bancos$ /api/endpoints/bancos.php last;
-rewrite ^/api/bancos/([^/]+)$ /api/endpoints/bancos.php?id=$1 last;
 
-# Arquivos estáticos
+# /api/bancos  (barra opcional)
+rewrite ^/api/bancos/?$ /api/endpoints/bancos.php last;
+
+# /api/bancos/104  (barra opcional)
+rewrite ^/api/bancos/([^/]+)/?$ /api/endpoints/bancos.php?id=$1 last;
+
+# Arquivos estáticos dentro da API
 location ~* \.(png|jpg|jpeg|gif|svg|webp|ico)$ {
     try_files $uri =404;
 }
 
-# Bloquear acesso direto aos PHP dos endpoints,
-# mas permitir chamadas internas via rewrite
+# Proibir acesso direto a endpoints PHP
 location ~ ^/api/endpoints/.+\.php$ {
     internal;
 }
