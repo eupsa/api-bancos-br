@@ -28,7 +28,11 @@ if (!empty($_GET['id'])) {
         }
     }
 } else {
-    $sql = $pdo->prepare('SELECT * FROM Bancos ORDER BY ISPB ASC');
+    $sql = $pdo->prepare("
+    SELECT * 
+    FROM Bancos 
+    WHERE codigo NOT IN ('0', '00', '000')
+    ORDER BY ISPB ASC");
 
     if ($sql->execute()) {
         $bancos = $sql->fetchAll(PDO::FETCH_ASSOC);
